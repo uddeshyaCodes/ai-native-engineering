@@ -1,0 +1,23 @@
+// app/api/orders/route.ts
+import { NextResponse } from "next/server";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+
+export async function GET() {
+  const session = await auth();
+
+  // Trust the session, never a client-provided id (Chapter 2 "Common Pitfalls", slide 31)
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const orders = await prisma.order.findMany({
+    where: { userId: session.user.id },
+    orderBy: { createdAt: "desc" },
+  });
+
+  // Decimal doesn't serialize to JSON on its own — convert explicitly
+  const serialized = orders.map((o) => ({ ...o, total: o.total.toString() }));
+
+  return NextResponse.json(serialized);
+}

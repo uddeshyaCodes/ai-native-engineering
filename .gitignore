@@ -1,0 +1,24 @@
+# Dependencies & build
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.swc/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Misc
+*.docx
+~$*.docx

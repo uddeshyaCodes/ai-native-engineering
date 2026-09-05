@@ -1,0 +1,35 @@
+name: OrderMitra tests
+
+on:
+  push:
+    paths:
+      - "projects/002-ordermitra/**"
+      - ".github/workflows/ordermitra-test.yml"
+  pull_request:
+    paths:
+      - "projects/002-ordermitra/**"
+      - ".github/workflows/ordermitra-test.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/002-ordermitra
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: projects/002-ordermitra/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage

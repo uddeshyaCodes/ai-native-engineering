@@ -1,0 +1,34 @@
+---
+description: Keep module5 workshop README reference in sync when implementing chapters
+globs: workshops/5-AI-Powererd-UI/module5_handson_tutorial/**/*
+alwaysApply: false
+---
+
+# OrderMitra workshop README
+
+When implementing or finishing a workshop chapter in this project, update `README.md` **Workshop Reference** in the same session.
+
+## When to update
+
+- Completing a route, tool, or demo that was marked TODO
+- Adding meaningful learning notes or comments to chapter files
+- Changing request flow or key APIs for a chapter
+
+## What to update
+
+1. **Summary table** — set Status to `Done` (or keep `TODO`)
+2. **Chapter section** — add or expand:
+   - File paths (server + client)
+   - **What we learned** (concepts, APIs, pitfalls)
+   - **Request flow** (one-line diagram)
+3. Move placeholder `— TODO` sections to full sections when done
+
+## Current progress (update this line when chapters complete)
+
+Ch.1 SSE · Ch.2a streaming chat · Ch.2b confidence · Ch.2c order-summary · Ch.3 search · Ch.4 HITL — **Done**.
+
+## Style
+
+- Match existing README tone and section format
+- Do not remove Setup / Model / Chapter 4 warning sections
+- Keep entries concise; link paths with backticks

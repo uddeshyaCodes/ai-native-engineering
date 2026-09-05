@@ -1,0 +1,1 @@
+This repository is my AI Engineering Journal—a collection of project case studies, technical deep dives, experiments, and lessons learned as I transition into AI engineering. Each project documents not only what I built, but also the engineering decisions, trade-offs, and insights gained along the way.
