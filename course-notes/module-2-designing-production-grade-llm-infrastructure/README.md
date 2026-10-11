@@ -13,6 +13,7 @@ Study notes derived from lecture transcripts.
 | # | Folder | Topic | Instructor (from transcript) |
 |---|--------|--------|------------------------------|
 | 01 | [lecture-01-fastapi-architecture-rest-api-design](./lecture-01-fastapi-architecture-rest-api-design/) | FastAPI architecture, ASGI/WSGI, Pydantic, DI, routers, versioning, RFC 9457, OpenAPI | Yubesh Patta (IIT Kharagpur); demos: Subhajit Shah |
+| 02 | [lecture-02-llm-sdk-streaming-structured-outputs](./lecture-02-llm-sdk-streaming-structured-outputs/) | KaryaSetu — LLM SDKs vs raw HTTP, SSE streaming, structured outputs | Yubesh Patta (IIT Kharagpur); demos: Subhajit Shah |
 
 Each lecture folder has:
 

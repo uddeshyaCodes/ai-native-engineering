@@ -1,0 +1,4 @@
+{
+  "job_description": "Backend Engineer, Platform. You will own Python services that sit in front of third-party model providers. Requirements: 2+ years production Python, strong async fundamentals, experience designing REST APIs consumed by other teams, comfort with observability and cost control.",
+  "experience_notes": "Two years at a logistics startup. Built and owned a FastAPI service that wrapped a carrier rate API - handled retries, timeouts and their flaky rate limits. Wrote the OpenAPI spec the mobile team consumed. Set up structured logging and per-endpoint latency dashboards."
+}

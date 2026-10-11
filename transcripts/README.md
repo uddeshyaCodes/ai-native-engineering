@@ -10,6 +10,7 @@ transcripts/
     lecture-01-….txt … lecture-06-….txt
   module-2/
     lecture-01-….txt
+    lecture-02-….txt
 ```
 
 Filenames match the folders under `course-notes/`.
@@ -36,5 +37,6 @@ Study notes: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/m
 | File | Lecture |
 |------|---------|
 | [lecture-01-fastapi-architecture-rest-api-design.txt](./module-2/lecture-01-fastapi-architecture-rest-api-design.txt) | FastAPI architecture, ASGI/WSGI, Pydantic, DI, routers, versioning, OpenAPI |
+| [lecture-02-llm-sdk-streaming-structured-outputs.txt](./module-2/lecture-02-llm-sdk-streaming-structured-outputs.txt) | KaryaSetu — LLM SDKs, SSE streaming, structured outputs |
 
 Study notes: [`course-notes/module-2-designing-production-grade-llm-infrastructure/`](../course-notes/module-2-designing-production-grade-llm-infrastructure/)

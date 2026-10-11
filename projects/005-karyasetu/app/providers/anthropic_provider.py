@@ -1,0 +1,94 @@
+"""
+Anthropic adapter.
+
+Three differences from OpenAI, and they are why this file exists:
+  1. `system` is a TOP-LEVEL parameter, not a message.
+  2. `max_tokens` is REQUIRED.
+  3. The reply is a LIST of typed content blocks, so we filter by type rather
+     than indexing [0]. Below, one of those blocks is a tool call.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Iterator
+from typing import Any
+
+import anthropic
+from anthropic import Anthropic
+
+from . import Completion, ProviderError
+
+
+class AnthropicProvider:
+    name = "anthropic"
+
+    def __init__(self, settings) -> None:
+        if not settings.anthropic_api_key:
+            raise RuntimeError("ANTHROPIC_API_KEY is not set")
+        self.model = settings.anthropic_model
+        self.s = settings
+        self.client = Anthropic(api_key=settings.anthropic_api_key)
+
+    def complete(self, *, system: str, user: str) -> Completion:
+        """Complete as of Part 1."""
+        try:
+            message = self.client.messages.create(
+                model=self.model,
+                max_tokens=self.s.max_tokens,
+                temperature=self.s.temperature,
+                system=system,
+                messages=[{"role": "user", "content": user}],
+            )
+        except anthropic.APIError as exc:
+            raise ProviderError(str(exc)) from exc
+
+        text = "".join(b.text for b in message.content if b.type == "text")
+        return Completion(text=text, model=self.model, provider=self.name)
+
+    def stream(self, *, system: str, user: str) -> Iterator[str]:
+        """Complete as of Part 2."""
+        try:
+            with self.client.messages.stream(
+                model=self.model,
+                max_tokens=self.s.max_tokens,
+                temperature=self.s.temperature,
+                system=system,
+                messages=[{"role": "user", "content": user}],
+            ) as stream:
+                yield from stream.text_stream
+        except anthropic.APIError as exc:
+            raise ProviderError(str(exc)) from exc
+
+    def structured(
+        self, *, system: str, user: str, schema: dict[str, Any], name: str
+    ) -> dict[str, Any]:
+        """
+        Anthropic's portable answer to "give me JSON" is tool use — we never
+        intend to run the tool. We define one whose input schema is our target
+        shape, force the model to call it with `tool_choice`, and read its
+        arguments instead of its prose.
+        """
+        try:
+            message = self.client.messages.create(
+                model=self.model,
+                max_tokens=self.s.max_tokens,
+                temperature=self.s.temperature,
+                system=system,
+                messages=[{"role": "user", "content": user}],
+                tools=[
+                    {
+                        "name": name,
+                        "description": "Return the completed report.",
+                        "input_schema": schema,
+                    }
+                ],
+                tool_choice={"type": "tool", "name": name},
+            )
+        except anthropic.APIError as exc:
+            raise ProviderError(str(exc)) from exc
+
+        for block in message.content:
+            if block.type == "tool_use":
+                return block.input
+
+        raise ProviderError("The model did not call the tool.")
