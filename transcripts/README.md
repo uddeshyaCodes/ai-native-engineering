@@ -7,12 +7,12 @@ Raw lecture transcripts for the AI Engineering course journal.
 ```
 transcripts/
   module-1/
+    lecture-01-….txt … lecture-06-….txt
+  module-2/
     lecture-01-….txt
-    …
-    lecture-06-….txt
 ```
 
-Filenames match the folders under `course-notes/module-1-ai-native-fundamentals/`.
+Filenames match the folders under `course-notes/`.
 
 ---
 
@@ -27,4 +27,14 @@ Filenames match the folders under `course-notes/module-1-ai-native-fundamentals/
 | [lecture-05-realtime-streaming-ai-ui.txt](./module-1/lecture-05-realtime-streaming-ai-ui.txt) | Order Mitra — SSE, AI SDK, agents |
 | [lecture-06-testing-cicd-deployment.txt](./module-1/lecture-06-testing-cicd-deployment.txt) | Testing, CI/CD, Vercel deployment |
 
-Study notes derived from these: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/module-1-ai-native-fundamentals/)
+Study notes: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/module-1-ai-native-fundamentals/)
+
+---
+
+## Module 2: Designing Production-Grade LLM Infrastructure
+
+| File | Lecture |
+|------|---------|
+| [lecture-01-fastapi-architecture-rest-api-design.txt](./module-2/lecture-01-fastapi-architecture-rest-api-design.txt) | FastAPI architecture, ASGI/WSGI, Pydantic, DI, routers, versioning, OpenAPI |
+
+Study notes: [`course-notes/module-2-designing-production-grade-llm-infrastructure/`](../course-notes/module-2-designing-production-grade-llm-infrastructure/)
