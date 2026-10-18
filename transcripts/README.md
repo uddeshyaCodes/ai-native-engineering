@@ -7,7 +7,7 @@ Raw lecture transcripts for the AI Engineering course journal.
 ```
 transcripts/
   module-1/
-    lecture-01-….txt … lecture-06-….txt
+    lecture-01-….txt … lecture-07-….txt
   module-2/
     lecture-01-….txt … lecture-03-….txt
 ```
@@ -26,6 +26,7 @@ Filenames match the folders under `course-notes/`.
 | [lecture-04-postgres-prisma-oauth.txt](./module-1/lecture-04-postgres-prisma-oauth.txt) | Prisma, OAuth, TanStack Query, AI schema design |
 | [lecture-05-realtime-streaming-ai-ui.txt](./module-1/lecture-05-realtime-streaming-ai-ui.txt) | Order Mitra — SSE, AI SDK, agents |
 | [lecture-06-testing-cicd-deployment.txt](./module-1/lecture-06-testing-cicd-deployment.txt) | Testing, CI/CD, Vercel deployment |
+| [lecture-07-cineseat-trust-boundaries-final-audit.txt](./module-1/lecture-07-cineseat-trust-boundaries-final-audit.txt) | Module finale — CineSeat, trust boundaries, Lighthouse vs axe |
 
 Study notes: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/module-1-ai-native-fundamentals/)
 

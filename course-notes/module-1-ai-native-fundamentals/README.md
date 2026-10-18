@@ -2,7 +2,7 @@
 
 Study notes derived from lecture transcripts for graded assignment prep (10 MCQs).
 
-**Source transcripts:** [`transcripts/module-1/`](../../transcripts/module-1/) (`lecture-01-….txt` … `lecture-06-….txt`)
+**Source transcripts:** [`transcripts/module-1/`](../../transcripts/module-1/) (`lecture-01-….txt` … `lecture-07-….txt`)
 
 ---
 
@@ -16,6 +16,7 @@ Study notes derived from lecture transcripts for graded assignment prep (10 MCQs
 | 04 | [lecture-04-postgres-prisma-oauth](./lecture-04-postgres-prisma-oauth/) | Prisma, OAuth/Auth.js, TanStack Query, Zustand, AI schema design | (Module 4 session) |
 | 05 | [lecture-05-realtime-streaming-ai-ui](./lecture-05-realtime-streaming-ai-ui/) | Order Mitra — SSE streaming, AI SDK, agents / tools, confidence UI | (Module 5 session) |
 | 06 | [lecture-06-testing-cicd-deployment](./lecture-06-testing-cicd-deployment/) | Jest/RTL, AI-assisted tests, GitHub Actions CI, Vercel CD | (Module 6 session) |
+| 07 | [lecture-07-cineseat-trust-boundaries-final-audit](./lecture-07-cineseat-trust-boundaries-final-audit/) | Module finale — CineSeat integration, trust boundaries, Lighthouse vs axe, end-to-end build | Theory + Q&A (module professor); hands-on: Rajdeep |
 
 Each lecture folder has:
 
@@ -41,5 +42,6 @@ Each lecture folder has:
 2. Lecture 05 (SSE vs polling vs WebSockets, streaming, tools)  
 3. Lecture 02 (event loop, strict TS, App Router streaming)  
 4. Lectures 03–04–06 for accessibility, data/auth, and testing/CI traps  
+5. Lecture 07 (trust boundaries, Zod vs TanStack/Zustand, Lighthouse vs axe, verify vs override) as the integration capstone  
 
 Start with each folder’s `quiz.md`, then skim `important-questions.md`, then use `study-material.md` to fill gaps.
