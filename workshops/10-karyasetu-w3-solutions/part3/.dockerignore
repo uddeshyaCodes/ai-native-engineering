@@ -1,0 +1,16 @@
+# Nothing listed here can ever be COPYed into an image.
+
+# secrets -- the whole point of this file
+.env
+.env.*
+!.env.example
+
+# things that are yours, not the image's
+.venv
+venv
+.git
+.gitignore
+.pytest_cache
+__pycache__
+*.pyc
+tests

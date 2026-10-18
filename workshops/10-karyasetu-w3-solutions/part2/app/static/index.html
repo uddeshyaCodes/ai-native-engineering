@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>KaryaSetu — streaming demo</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 15px/1.55 -apple-system, "Segoe UI", system-ui, sans-serif;
+    max-width: 780px; margin: 2.5rem auto; padding: 0 1.25rem;
+  }
+  h1 { font-size: 1.35rem; margin-bottom: .25rem; }
+  p.sub { margin-top: 0; opacity: .7; }
+  textarea { width: 100%; font: 13px/1.45 ui-monospace, Menlo, Consolas, monospace; padding: .6rem; }
+  .row { display: flex; gap: 1rem; align-items: center; margin: .9rem 0; }
+  button { padding: .5rem 1rem; font-size: .95rem; cursor: pointer; }
+  #status { font-size: .85rem; opacity: .75; }
+  #out {
+    white-space: pre-wrap; min-height: 11rem; padding: 1rem;
+    border: 1px solid currentColor; border-radius: 6px; opacity: .95;
+  }
+  #out:empty::before { content: "The letter appears here, a few words at a time."; opacity: .45; }
+</style>
+</head>
+<body>
+  <h1>KaryaSetu — cover letter, streamed</h1>
+  <p class="sub">Same model, same total time. It just stops making you wait for it.</p>
+
+  <label for="jd"><strong>Job posting</strong></label>
+  <textarea id="jd" rows="5"></textarea>
+
+  <label for="notes"><strong>Your experience notes</strong></label>
+  <textarea id="notes" rows="5"></textarea>
+
+  <div class="row">
+    <button id="go">Generate</button>
+    <button id="stop" disabled>Stop</button>
+    <span id="status">idle</span>
+  </div>
+
+  <div id="out"></div>
+
+<script>
+// Note what this is NOT using: EventSource.
+//
+// EventSource can only issue GET requests, and we need to POST a body of a
+// few thousand characters. So we read the response body ourselves with fetch
+// and parse SSE frames by splitting on the blank line. About 15 lines.
+const $ = (id) => document.getElementById(id);
+
+$("jd").value = "Backend Engineer, Platform. You will own Python services that sit in front of third-party model providers. Requirements: 2+ years production Python, strong async fundamentals, experience designing REST APIs consumed by other teams, comfort with observability and cost control.";
+$("notes").value = "Two years at a logistics startup. Built and owned a FastAPI service wrapping a flaky carrier rate API - retries, timeouts, their rate limits. Wrote the OpenAPI spec the mobile team consumed. Set up structured logging and latency dashboards. Paired a lot with the two interns.";
+
+let controller = null;
+
+$("stop").onclick = () => controller && controller.abort();
+
+$("go").onclick = async () => {
+  $("out").textContent = "";
+  $("status").textContent = "connecting…";
+  $("go").disabled = true;
+  $("stop").disabled = false;
+  controller = new AbortController();
+
+  const t0 = performance.now();
+  let firstTokenAt = null;
+
+  try {
+    const res = await fetch("/v1/cover-letter/stream", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        job_description: $("jd").value,
+        experience_notes: $("notes").value,
+        tone: "direct",
+      }),
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      const problem = await res.json().catch(() => ({}));
+      $("status").textContent = "error: " + (problem.detail || res.status);
+      return;
+    }
+
+    const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+    let buffer = "";
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += value;
+
+      // Frames are separated by a blank line. Anything after the last blank
+      // line is an incomplete frame — keep it in the buffer for next time.
+      const frames = buffer.split("\n\n");
+      buffer = frames.pop();
+
+      for (const frame of frames) {
+        let event = "message", data = "";
+        for (const line of frame.split("\n")) {
+          if (line.startsWith("event:")) event = line.slice(6).trim();
+          else if (line.startsWith("data:")) data += line.slice(5).trim();
+        }
+        if (!data) continue;
+        const payload = JSON.parse(data);
+
+        if (event === "token") {
+          if (firstTokenAt === null) {
+            firstTokenAt = performance.now();
+            $("status").textContent =
+              `first token in ${Math.round(firstTokenAt - t0)} ms — still generating…`;
+          }
+          $("out").textContent += payload.text;
+        } else if (event === "done") {
+          $("status").textContent =
+            `done — first token ${Math.round(firstTokenAt - t0)} ms, ` +
+            `total ${Math.round(performance.now() - t0)} ms`;
+        } else if (event === "error") {
+          $("status").textContent = "stream error: " + payload.detail;
+        }
+      }
+    }
+  } catch (err) {
+    $("status").textContent =
+      err.name === "AbortError" ? "stopped by you — check the server log" : "failed: " + err;
+  } finally {
+    $("go").disabled = false;
+    $("stop").disabled = true;
+  }
+};
+</script>
+</body>
+</html>

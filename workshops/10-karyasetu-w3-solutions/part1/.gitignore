@@ -1,0 +1,6 @@
+# secrets and clutter: never commit these
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc

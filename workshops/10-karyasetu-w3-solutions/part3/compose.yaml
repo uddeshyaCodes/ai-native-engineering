@@ -1,0 +1,73 @@
+# Dev-mode: one command starts the whole environment.
+#
+#   docker compose up --build                  the API, with hot reload
+#   docker compose --profile proxy up --build  ...plus an nginx front door on :8080
+#
+# Handy while you work:
+#   docker compose logs -f api                 follow the server log
+#   docker compose exec api sh                 a shell inside the running container
+#   docker compose run --rm api pytest         run the tests in the container
+#   docker compose run --rm api python -m app.evals --grid
+#   docker compose config                      validate this file, show it resolved
+#   docker compose down                        stop and remove everything
+
+name: karyasetu
+
+services:
+  api:
+    build:
+      context: .
+      target: dev            # the `dev` stage of the Dockerfile
+
+    # -----------------------------------------------------------------------
+    # TODO 2: three settings, and each one is a lesson.
+    #
+    #   ports      publish container port 8000 on host port 8000  ("8000:8000",
+    #              HOST:CONTAINER). Without it the API runs but nobody can reach it.
+    #
+    #   env_file   load configuration from `.env` at RUN time, so no secret is
+    #              ever baked into the image. Use the long form so a missing
+    #              .env is not an error (KaryaSetu runs on the mock without one).
+    #              Loads shared ../.env first, then local .env if present:
+    #                - path: ../.env
+    #                  required: false
+    #                - path: .env
+    #                  required: false
+    #
+    #   volumes    bind-mount your code so an edit on your laptop appears inside
+    #              the container instantly, and uvicorn --reload sees it:
+    #                ./app:/srv/app
+    #              Also mount ./tests to /srv/tests, and ./pytest.ini to
+    #              /srv/pytest.ini (add :ro), so `docker compose run --rm api
+    #              pytest` works.
+    # -----------------------------------------------------------------------
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: ../.env
+        required: false
+      - path: .env
+        required: false
+    volumes:
+      - ./app:/srv/app
+      - ./tests:/srv/tests
+      - ./pytest.ini:/srv/pytest.ini:ro
+    # -- end of solution
+
+    environment:
+      APP_DEBUG: "true"      # dev-mode: /v1/fit-report/preview exists, scratchpad is returned
+      # If reload never fires on Windows/WSL (file events do not cross the bind
+      # mount), uncomment:
+      # WATCHFILES_FORCE_POLLING: "true"
+
+  # A production-shaped front door. Off by default: `--profile proxy` turns it on.
+  proxy:
+    profiles: ["proxy"]
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      api:
+        condition: service_healthy   # waits for the Dockerfile's HEALTHCHECK

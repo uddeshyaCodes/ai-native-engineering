@@ -1,0 +1,14 @@
+# DO NOT USE. Kept on purpose for the "how a key leaks" demo.
+#
+#   docker build -f Dockerfile.leaky -t karyasetu:leaky .
+#   docker run --rm karyasetu:leaky cat .env      # <- your API key, in the image
+#   docker history karyasetu:leaky                # <- the COPY layer that did it
+#
+# `COPY . .` copies EVERYTHING in the build context, including .env. Deleting it
+# in a later RUN does not help: the earlier layer still contains it, and anyone
+# who can pull the image can read it. The fix is .dockerignore, not RUN rm.
+FROM python:3.12-slim
+WORKDIR /srv
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
