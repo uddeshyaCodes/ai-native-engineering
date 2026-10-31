@@ -15,6 +15,7 @@ Study notes derived from lecture transcripts.
 | 01 | [lecture-01-fastapi-architecture-rest-api-design](./lecture-01-fastapi-architecture-rest-api-design/) | FastAPI architecture, ASGI/WSGI, Pydantic, DI, routers, versioning, RFC 9457, OpenAPI | Yubesh Patta (IIT Kharagpur); demos: Subhajit Shah |
 | 02 | [lecture-02-llm-sdk-streaming-structured-outputs](./lecture-02-llm-sdk-streaming-structured-outputs/) | KaryaSetu — LLM SDKs vs raw HTTP, SSE streaming, structured outputs | Yubesh Patta (IIT Kharagpur); demos: Subhajit Shah |
 | 03 | [lecture-03-prompts-as-contracts-docker-dev-mode](./lecture-03-prompts-as-contracts-docker-dev-mode/) | KaryaSetu Week 3 — prompts as contracts, injection, few-shot/CoT, Docker | Yubesh Patta (IIT Kharagpur); demos: Subhajit Shah |
+| 04 | [lecture-04-multimodal-documents-ocr-celery](./lecture-04-multimodal-documents-ocr-celery/) | Multimodal documents - PDF/CSV/Excel, OCR (Pillow, OpenCV, Tesseract, vision LLMs), FastAPI + Celery | IIT Kharagpur professor (name unclear in transcript); demos: Salma |
 
 Each lecture folder has:
 
