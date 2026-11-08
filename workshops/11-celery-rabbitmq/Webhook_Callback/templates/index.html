@@ -1,0 +1,13 @@
+<h1>Divide</h1>
+
+<form method="post" action="/submit">
+    <input name="number1" placeholder="number 1">
+    <input name="number2" placeholder="number 2">
+    <button type="submit">Submit</button>
+</form>
+
+<ul>
+{% for tid, status, result in tasks %}
+    <li>{{ tid }} - {{ status }} - {{ result }}</li>
+{% endfor %}
+</ul>
