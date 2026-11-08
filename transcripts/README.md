@@ -9,7 +9,7 @@ transcripts/
   module-1/
     lecture-01-….txt … lecture-07-….txt
   module-2/
-    lecture-01-….txt … lecture-04-….txt
+    lecture-01-….txt … lecture-05-….txt
 ```
 
 Filenames match the folders under `course-notes/`.
@@ -40,5 +40,6 @@ Study notes: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/m
 | [lecture-02-llm-sdk-streaming-structured-outputs.txt](./module-2/lecture-02-llm-sdk-streaming-structured-outputs.txt) | KaryaSetu — LLM SDKs, SSE streaming, structured outputs |
 | [lecture-03-prompts-as-contracts-docker-dev-mode.txt](./module-2/lecture-03-prompts-as-contracts-docker-dev-mode.txt) | KaryaSetu Week 3 — prompts as contracts, Docker |
 | [lecture-04-multimodal-documents-ocr-celery.txt](./module-2/lecture-04-multimodal-documents-ocr-celery.txt) | Multimodal documents, OCR, FastAPI + Celery |
+| [lecture-05-webhooks-llm-cost-prompts-dpdp.txt](./module-2/lecture-05-webhooks-llm-cost-prompts-dpdp.txt) | Webhooks and callbacks, LLM cost tracking, prompt versioning and evals, DPDP Act, PII anonymisation |
 
 Study notes: [`course-notes/module-2-designing-production-grade-llm-infrastructure/`](../course-notes/module-2-designing-production-grade-llm-infrastructure/)
