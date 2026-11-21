@@ -44,3 +44,13 @@ Study notes: [`course-notes/module-1-ai-native-fundamentals/`](../course-notes/m
 | [revision-class-lectures-04-05.txt](./module-2/revision-class-lectures-04-05.txt) | Revision of lectures 04 and 05: Celery, RabbitMQ, webhooks, integrated project |
 
 Study notes: [`course-notes/module-2-designing-production-grade-llm-infrastructure/`](../course-notes/module-2-designing-production-grade-llm-infrastructure/)
+
+---
+
+## Module 3: Retrieval, Context Engineering and Evaluation
+
+| File | Lecture |
+|------|---------|
+| [lecture-01-search-foundations-embeddings-retrieval.txt](./module-3/lecture-01-search-foundations-embeddings-retrieval.txt) | Search foundations, BM25, embeddings, hybrid search with RRF, re-ranking, embedding model selection |
+
+Study notes: [`course-notes/module-3-retrieval-context-engineering-evaluation/`](../course-notes/module-3-retrieval-context-engineering-evaluation/)
